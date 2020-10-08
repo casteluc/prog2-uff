@@ -1,0 +1,1 @@
+# Repositório criado para uso exclusivo durante o curso de Programação 2 (linguagem c) na Universidade Federal Fluminense.
