@@ -9,7 +9,7 @@ int main() {
     printf("Insira os valores do vetor A um a um: \n");
     for (i = 0; i < n1; i++) {
         scanf("%d", &A[i]);
-        C[i] = A[i];
+        C[i] = A[i]
     }
 
     printf("Insira o tamanho do vetor B: ");
