@@ -1,75 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void main() {
-    int n, i, j, e;
-    float sub;
+int main() {
+    int n, m, i, j, triangSup = 0, triangInf = 0;
+    double A[25][25], B[25], X[25], sub;
 
-    // Requere ao usuário o valor de N
-    printf("Insira o valor de N: ");
+    printf("Insira o valor de n (<= 25): ");
     scanf("%d", &n);
+    // M igual ao valor de n menos 1 para evitar repetições mais a frente no código
+    m = n - 1;
 
-    // Aloca uma matriz na memória dinamicamente, de acordo com os dados inseridos pelo usuário
-    float **A = (float**)malloc(n * sizeof(float*));
-
-    for (i = 0; i < n; i++) { 
-        A[i] = (float*) malloc(n * sizeof(float)); 
+    // Registra os dados da matriz A
+    printf("\nInsira os valores da matriz A(n x n) um a um:\n");
+    for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
-            printf("Insira o valor do elemento (%d, %d) da matriz A: ", i, j);
-            scanf("%f", &A[i][j]);
+            scanf("%lf", &A[i][j]);
+            
+            // Confere se a matriz sendo inserida é triangular ou não
+            if (j > i) {
+                if (A[i][j] != 0) triangInf = 1;
+            } else if (j < i) {
+                if (A[i][j] != 0) triangSup = 1;
+            }
         }
     }
 
-    float **B = (float**)malloc(n * sizeof(float*));
-
-    for (i = 0; i < n; i++) { 
-        B[i] = (float*) malloc(1 * sizeof(float)); 
-        for (j = 0; j < 1; j++) {
-            printf("Insira o valor do elemento (%d, %d) da matriz B: ", i, j);
-            scanf("%f", &B[i][j]);
+    // Registra os dados da matriz B se a matriz A for triangular
+    if (triangInf == 0 || triangSup == 0) {
+        printf("\nInsira os valores da matriz B(n x 1): \n");
+        for (i = 0; i < n; i++) {
+            scanf("%lf", &B[i]);
         }
     }
 
-    float **X = (float**)malloc(n * sizeof(float*));
-
-    for (i = 0; i < n; i++) { 
-        X[i] = (float*) malloc(1 * sizeof(float)); 
-        for (j = 0; j < n; j++) {
+    // Calcula os valores da matriz X se A for triangular inferior
+    if (triangInf == 0) {
+        X[0] = B[0] / A[0][0];
+        for (i = 1; i < n; i++) {
             sub = 0;
-            if (i > 0) {
-                for (e = 0; e < i; e++) {
-                    // sub = sub + (A[i][e] * X[e][0]);
-                }
-            }   
-
-            // printf("%.2f\n", sub);
-            // printf("%.2f\n", (B[i][0] - sub) / (A[i][j]));
-
-            X[i][0] = (B[i][0] - sub) / (A[i][j]);
+            for (j = 0; j < n; j++) {
+                sub = sub + (A[i][j] * X[j]);
+            }
+            X[i] = (B[i] - sub) / A[i][i]; 
         }
     }
 
-    // // Imprime a matriz A na tela 
-    // for (i=0; i < n; i++) {
-    //     for (j=0; j < n; j++) {
-    //         printf("%.2f\t", A[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
-    // // Imprime a matriz B na tela 
-    // for (i=0; i < n; i++) {
-    //     for (j=0; j < 1; j++) {
-    //         printf("%.2f\t", B[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
-    // Imprime a matriz B na tela 
-    for (i=0; i < n; i++) {
-        for (j=0; j < 1; j++) {
-            printf("%.2f\t", X[i][j]);
+    // Calcula os valores da matriz X se A for triangular superior
+    // Lembrando que m = n - 1
+    if (triangSup == 0) {
+        X[m] = B[m] / A[m][m];
+        for (i = 1; i < n; i++) {
+            sub = 0;
+            for (j = 0; j < n; j++) {
+                sub = sub + (A[m - i][m - j] * X[m - j]);
+            }
+            X[m - i] = (B[m - i] - sub) / A[m - i][m - i]; 
         }
-        printf("\n");
     }
+
+    // Imprime a matriz X na tela se a matriz A for triangular
+    if (triangInf == 0 || triangSup == 0) {
+        printf("\nA matriz X eh:");
+        for (i = 0; i < n; i++) {
+            printf("\n%.2lf", X[i]);
+        }
+    }
+    
+    return 0;
 }
