@@ -11,8 +11,7 @@ void bubbleSort(int *V, int n){
                 aux = V[e];
                 V[e] = V[e + 1];
                 V[e + 1] = aux;
-            }
-        }
+            }     }
     }
 }
 
