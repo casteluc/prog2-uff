@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void BubbleSort(int *vetor, int tamanho){
     int i, j, aux;
 
@@ -17,7 +16,6 @@ void BubbleSort(int *vetor, int tamanho){
 }
 
 void InsertionSort(int *vetor, int tamanho){
-
     int i, j, aux;
 
     //coloco o valor 1 pra ele ja comecar comparando o segundo elemento com o primeiro(que vai ser o 0 do outro coiso)
@@ -41,7 +39,6 @@ void InsertionSort(int *vetor, int tamanho){
 }
 
 void SelectionSort(int *vetor, int tam){
-
     int i, j, aux, index;
 
     for(i = 0; i < tam; i++){
@@ -57,20 +54,19 @@ void SelectionSort(int *vetor, int tam){
 }
 
 int main(){
-
     int resposta, tam, i;
     
-    printf("Digite o tamanho do vetor que vc quer: ");
+    printf("Insira o tamanho do vetor: ");
     scanf("%d", &tam);
 
     int vetor[tam];
 
+    printf("Insira os valores do vetor um a um:\n");
     for(i = 0; i < tam; i++){
-        printf("Digite um numero pra colocar no vetor: ");
         scanf("%d", &vetor[i]);
     }
 
-    printf("Digite qual metodo de ordenacao vc quer fazer:\n1-Bubble Sort\n2-Insertion Sort\n3-Selection Sort\n");
+    printf("\nInsira o numero do metodo por qual o vetor vai ser ordenado:\n1-Bubble Sort\n2-Insertion Sort\n3-Selection Sort\n");
     scanf("%d", &resposta);
 
     switch(resposta){
@@ -85,10 +81,12 @@ int main(){
         case 3:
             SelectionSort(vetor, tam);
             break;
+
         default:
             break;
     }
 
+    printf("\nVetor ordenado:\n");
     for(i = 0; i < tam; i++){
         printf("%d ", vetor[i]);
     }
